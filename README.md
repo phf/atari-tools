@@ -1,19 +1,19 @@
 # Atari Disk Tools
 
 
-* [ATR](#atr)<br>
-  * [Image Formats](#image-formats)<br>
-  * [Compiling instructions](#atr-compiling-instructions)<br>
-  * [Syntax](#atr-syntax)<br>
-  * [Commands](#commands)<br>
-  * [ATR header format](#atr-header-format)<br>
-  * [Filesystem technical descriptions](#filesystem-format)<br>
-* [ATR2IMD](#atr2imd)<br>
-* [IMD2ATR](#imd2atr)<br>
-  * [Compiling instructions](#imd2atr-compiling-instructions)<br>
-* [detok](#detok)<br>
-  * [Compiling instructions](#detok-compiling-instructions)<br>
-  * [Syntax](#detok-syntax)<br>
+* [ATR](#atr)
+  * [Image Formats](#image-formats)
+  * [Compiling instructions](#atr-compiling-instructions)
+  * [Syntax](#atr-syntax)
+  * [Commands](#commands)
+  * [ATR header format](#atr-header-format)
+  * [Filesystem technical descriptions](#filesystem-format)
+* [ATR2IMD](#atr2imd)
+* [IMD2ATR](#imd2atr)
+  * [Compiling instructions](#imd2atr-compiling-instructions)
+* [detok](#detok)
+  * [Compiling instructions](#detok-compiling-instructions)
+  * [Syntax](#detok-syntax)
 
 Use ATR to manipulate .atr disk image files.
 
@@ -109,17 +109,17 @@ Example of 'ls', result is sorted as in UNIX:
 
 	./atr "Osaplus Pro 2.12.atr" ls -a
 
-	basic.com    config.src   do.com       dupdbl.com   help.com                  
+	basic.com    config.src   do.com       dupdbl.com   help.com
 	ciobas.usr   copy.com     dos.sys      dupsng.com   initdbl.c
 
 Example of 'ls -al', shows full details:
 
 	./atr dos2_0s.atr ls -al
 
-	-rw-s    694 (  6) autorun.sys   (load=2800-29db load=2a4d-2a92 
+	-rw-s    694 (  6) autorun.sys   (load=2800-29db load=2a4d-2a92
 	                                 load=110-18b load=2e0-2e1 run=2800)
 	-rw--  31616 (253) choplift.exe  (load=4500-bfff load=2e0-2e1 run=5f00)
-	-rw-s   4875 ( 39) dos.sys      
+	-rw-s   4875 ( 39) dos.sys
 	-rw--  19852 (159) frogger.exe   (load=2480-71ff load=2e0-2e1 run=7180)
 	-rw--  16739 (134) jumpjr.exe    (load=1f00-6056 load=2e0-2e1 run=1f3f)
 
@@ -187,9 +187,9 @@ Copied from "Structure of an SIO2PC Atari disk image" in:
 
 WORD = special code* indicating this is an Atari disk file
 
-* The "code" is the 16 bit sum of the individual ASCII values of the 
-string of bytes: "NICKATARI". If you try to load a file without this first 
-WORD, you get a "THIS FILE IS NOT AN ATARI DISK FILE" error 
+* The "code" is the 16 bit sum of the individual ASCII values of the
+string of bytes: "NICKATARI". If you try to load a file without this first
+WORD, you get a "THIS FILE IS NOT AN ATARI DISK FILE" error
 message.
 
 WORD = size of this disk image, in paragraphs (size/16)
@@ -198,17 +198,17 @@ WORD = sector size. (128 or 256) bytes/sector
 
 WORD = high part of size, in paragraphs (added by REV 3.00)
 
-BYTE = disk flags such as copy protection and write protect; see copy 
+BYTE = disk flags such as copy protection and write protect; see copy
 protection chapter.
 
 WORD = 1st (or typical) bad sector; see copy protection chapter.
 SPARES 5 unused (spare) header bytes (contain zeroes)
 
-After the header comes the disk image. This is just a continuous string of 
-bytes, with the first 128 bytes being the contents of disk sector 1, the 
+After the header comes the disk image. This is just a continuous string of
+bytes, with the first 128 bytes being the contents of disk sector 1, the
 second being sector 2, etc.
 
-Note however that for 256 bytes per sector disks, the format is ambiguous.  
+Note however that for 256 bytes per sector disks, the format is ambiguous.
 The issue is that the first three sectors use only 128 bytes, even though
 there are 256 bytes on the disk.  This has led to three different formats:
 

@@ -4,20 +4,19 @@
  *	Copyright
  *		(C) 2011 Joseph H. Allen
  *
- * This is free software; you can redistribute it and/or modify it under the 
- * terms of the GNU General Public License as published by the Free Software 
- * Foundation; either version 1, or (at your option) any later version.  
+ * This is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 1, or (at your option) any later version.
  *
- * It is distributed in the hope that it will be useful, but WITHOUT ANY 
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more 
- * details.  
- * 
- * You should have received a copy of the GNU General Public License along with 
- * this software; see the file COPYING.  If not, write to the Free Software Foundation, 
+ * It is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this software; see the file COPYING.  If not, write to the Free Software Foundation,
  * 675 Mass Ave, Cambridge, MA 02139, USA.
  */
- 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +52,7 @@ void free_atr(struct atr *atr)
 }
 
 /* Interleave map for 90K disks */
-int sd_map[] = 
+int sd_map[] =
   { 1, 3, 5, 7, 9, 11, 13, 15, 17, 2, 4, 6, 8, 10, 12, 14, 16, 18 };
 
 /* Interleave map for 130K disks */
@@ -61,7 +60,7 @@ int dd_map[] =
   { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26 };
 
 /* Interleave map for 180K disks */
-int hd_map[] = 
+int hd_map[] =
   { 1, 3, 5, 7, 9, 11, 13, 15, 17, 2, 4, 6, 8, 10, 12, 14, 16, 18 };
 
 /* Read .atr image */
