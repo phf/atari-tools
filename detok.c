@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
     char *name = 0;
     FILE *f;
     unsigned char hdr[4];
-    int size;
-    int idx;
+    unsigned int size;
+    unsigned int idx;
     unsigned char *src;
     for (x = 1; argv[x]; ++x) {
         if (!strcmp(argv[x], "-h") || !strcmp(argv[x], "--help")) {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         printf("File is empty?\n");
         return -1;
     }
-    src = (unsigned char *)malloc(size);
+    src = malloc(size);
     if (size != fread(src, 1, size, f)) {
         printf("Couldn't read rest of file (size %d indicated in header)\n", size);
         return -1;

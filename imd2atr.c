@@ -73,7 +73,7 @@ struct imd *read_imd(char *name)
 	struct track *track;
 	struct track *last;
 	char buf[1024];
-	int x;
+	unsigned int x;
 	int c;
 	FILE *f = fopen(name, "rb");
 	last = 0;
@@ -99,7 +99,7 @@ struct imd *read_imd(char *name)
 		return 0;
 	}
 
-	imd = (struct imd *)malloc(sizeof(struct imd));
+	imd = malloc(sizeof(struct imd));
 	imd->comment = strdup(buf);
 	imd->tracks = 0;
 	imd->ntracks = 0;
@@ -114,7 +114,7 @@ struct imd *read_imd(char *name)
 			return 0;
 		}
 //		printf("track\n");
-		track = (struct track *)malloc(sizeof(struct track));
+		track = malloc(sizeof(struct track));
 		track->data = 0;
 		track->map = 0;
 		track->next = 0;
@@ -151,14 +151,14 @@ struct imd *read_imd(char *name)
 			return 0;
 		}
 		track->sec_size = (128 << c);
-		track->map = (unsigned char *)malloc(track->sects);
+		track->map = malloc(track->sects);
 		if (1 != fread(track->map, track->sects, 1, f)) {
 			fprintf(stderr,"Couldn't read sector map\n");
 			fclose(f);
 			free_imd(imd);
 			return 0;
 		}
-		track->data = (unsigned char *)malloc(track->sects * track->sec_size);
+		track->data = malloc(track->sects * track->sec_size);
 		for (x = 0; x != track->sects; ++x) {
 			c = fgetc(f);
 			if (c < 0 || c > 8) {
@@ -272,8 +272,8 @@ int write_atr(struct imd *imd, char *dest_name, int logical, int sio)
 		char buf[80];
 		fclose(f);
 		printf("%s already exists.  Overwrite (y,n)?", dest_name);
-		fgets(buf,sizeof(buf)-1,stdin);
-		if (buf[0] != 'y' && buf[0] != 'Y') {
+		char *s = fgets(buf,sizeof(buf)-1,stdin);
+		if (s == NULL || (buf[0] != 'y' && buf[0] != 'Y')) {
 			printf("Skipping...\n");
 			return 0;
 		}

@@ -1209,8 +1209,8 @@ int put_file(char *local_name, char *atari_name)
         up = size + (data_size) - 1;
         up -= up % (data_size);
         num_sects = up / data_size;
-        buf = (unsigned char *)malloc(up);
-        if (size != fread(buf, 1, size, f)) {
+        buf = malloc(up);
+        if (size != (long) fread(buf, 1, size, f)) {
                 fprintf(stderr, "Couldn't read file '%s'\n", local_name);
                 status = 1;
                 fclose(f);
@@ -1340,7 +1340,7 @@ void get_info(struct name *nam)
                                 }
                                 /* Ignore short segments (DUP.SYS loader will not skip them) */
                                 if (segsize > 1) {
-                                        segment = (struct segment *)malloc(sizeof(struct segment));
+                                        segment = malloc(sizeof(struct segment));
                                         segment->start = first;
                                         segment->size = segsize;
                                         segment->next = 0;
@@ -1390,7 +1390,7 @@ void read_dir(int all_flg, int info_flg)
                         if (d->flag & FLAG_IN_USE) {
                                 struct name *nam;
                                 char *s = getname(d);
-                                nam = (struct name *)malloc(sizeof(struct name));
+                                nam = malloc(sizeof(struct name));
                                 nam->name = strdup(s);
                                 if (d->flag & FLAG_LOCKED)
                                         nam->locked = 1;
@@ -1545,7 +1545,10 @@ int mkfs(char *disk_name, int type, char* boot_sectors_file_path)
                         hdr[4] = 0x00;
                         hdr[5] = 0x01;
                         break;
-                }
+                } default: {
+                        fprintf(stderr, "Invalid type %d\n", type);
+                        return -1;
+		}
         }
         if (16 != fwrite(hdr, 1, 16, disk)) {
                 fprintf(stderr, "Couldn't write to '%s'\n", disk_name);
@@ -1806,7 +1809,7 @@ int main(int argc, char *argv[])
                         }
                         if (out_dir) {
                             int out_dir_len = strlen(out_dir);
-                            out_filename = (char*)malloc(out_dir_len + strlen(names[n]->name) + 2);
+                            out_filename = malloc(out_dir_len + strlen(names[n]->name) + 2);
                             strcat(out_filename, out_dir);
                             if ('/' != out_dir[out_dir_len - 1]) {
                                 strcat(out_filename, "/");

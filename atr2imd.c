@@ -84,7 +84,7 @@ struct atr *read_atr(char *name, int force_ed, int force_dd)
 	if (header[0] != 0x96 || header[1] != 0x02) {
 		fprintf(stderr, "Warning.. magic number is not 0x0296\n");
 	}
-	atr = (struct atr *)malloc(sizeof(struct atr));
+	atr = malloc(sizeof(struct atr));
 	atr->map = 0;
 	atr->data =0;
 
@@ -113,7 +113,7 @@ struct atr *read_atr(char *name, int force_ed, int force_dd)
 	fseek(f, 16, SEEK_SET);
 
 	/* Allocate space for image: give extra space to expand boot sectors */
-	atr->data = (unsigned char *)malloc(atr->size + 3 * 128);
+	atr->data = malloc(atr->size + 3 * 128);
 	if (!atr->data) {
 		fprintf(stderr, "Couldn't allocate space for image\n");
 		free_atr(atr);
@@ -229,8 +229,8 @@ int write_imd(struct atr *atr, char *dest_name, char *comment)
 		char buf[80];
 		fclose(f);
 		printf("%s already exists.  Overwrite (y,n)?", dest_name);
-		fgets(buf,sizeof(buf)-1,stdin);
-		if (buf[0] != 'y' && buf[0] != 'Y') {
+		char *s = fgets(buf,sizeof(buf)-1,stdin);
+		if (s == NULL || (buf[0] != 'y' && buf[0] != 'Y')) {
 			printf("Skipping...\n");
 			return 0;
 		}
