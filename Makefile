@@ -1,6 +1,9 @@
+CFLAGS=-std=c11 -Wall -Wextra -Wpedantic -Og -g -D_XOPEN_SOURCE=500
 
-atr : atr.c
-	gcc -W -Wall -pedantic -o atr atr.c
+ALL=atr atr2imd imd2atr detok
 
+all: $(ALL)
+
+.PHONY: clean
 clean:
-	@rm -f atr *.o
+	$(RM) $(ALL) *.o
